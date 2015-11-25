@@ -1,4 +1,4 @@
-package currencies
+package ruble
 
 import (
 	"testing"
