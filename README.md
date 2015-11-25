@@ -1,5 +1,5 @@
 # ruble
-Official currencies of russian ruble for specific date.
+Official rates of russian ruble for a specific date.
 
 ```go
 curs, err := GetCurrenciesByCode(time.Now())
