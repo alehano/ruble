@@ -1,6 +1,6 @@
 // Official rates of russian ruble for a specific date
 // http://www.cbr.ru/scripts/Root.asp?PrtId=SXML
-package currencies
+package ruble
 
 import (
 	"bytes"
@@ -29,15 +29,11 @@ type Currency struct {
 }
 
 func GetCurrenciesByCode(date time.Time) (map[string]float64, error) {
-	res := map[string]float64{}
 	curs, err := GetCurrencies(date)
 	if err != nil {
-		return res, err
+		return nil, err
 	}
-	for _, cur := range curs {
-		res[cur.Code] = RoundPlus(cur.Value*float64(cur.Nominal), 2)
-	}
-	return res, nil
+	return CurrenciesByCode(curs), nil
 }
 
 func GetCurrencies(date time.Time) ([]Currency, error) {
@@ -56,6 +52,14 @@ func GetCurrencies(date time.Time) ([]Currency, error) {
 	decoder.CharsetReader = charset.NewReaderLabel
 	err = decoder.Decode(&valCurs)
 	return valCurs.Valutes, err
+}
+
+func CurrenciesByCode(curs []Currency) map[string]float64 {
+	res := map[string]float64{}
+	for _, cur := range curs {
+		res[cur.Code] = RoundPlus(cur.Value*float64(cur.Nominal), 2)
+	}
+	return res
 }
 
 func getXML(date time.Time) ([]byte, error) {
