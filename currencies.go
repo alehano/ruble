@@ -1,4 +1,4 @@
-// Official currencies of russian ruble for specific date
+// Official rates of russian ruble for a specific date
 // http://www.cbr.ru/scripts/Root.asp?PrtId=SXML
 package currencies
 
