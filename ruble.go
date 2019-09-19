@@ -65,7 +65,20 @@ func CurrenciesByCode(curs []Currency) map[string]float64 {
 func getXML(date time.Time) ([]byte, error) {
 	const dateForm = "02/01/2006"
 	url := fmt.Sprintf("http://www.cbr.ru/scripts/XML_daily.asp?date_req=%s", date.Format(dateForm))
-	resp, err := http.Get(url)
+	tr := &http.Transport{
+		MaxIdleConns:       10,
+		IdleConnTimeout:    30 * time.Second,
+		DisableCompression: true,
+	}
+	client := &http.Client{Transport: tr}
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return []byte{}, err
+	}
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.75 Safari/537.36")
+	req.Header.Set("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7")
+	resp, err := client.Do(req)
+
 	if err != nil {
 		return []byte{}, err
 	}
