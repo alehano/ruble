@@ -1,5 +1,7 @@
 # ruble
-Official rates of russian ruble for a specific date.
+
+Official CBRF currency rates of Russian ruble for a specific date.
+Source: https://www.cbr.ru
 
 ```go
 curs, err := GetCurrenciesByCode(time.Now())

@@ -64,7 +64,7 @@ func CurrenciesByCode(curs []Currency) map[string]float64 {
 
 func getXML(date time.Time) ([]byte, error) {
 	const dateForm = "02/01/2006"
-	url := fmt.Sprintf("http://www.cbr.ru/scripts/XML_daily.asp?date_req=%s", date.Format(dateForm))
+	url := fmt.Sprintf("https://www.cbr.ru/scripts/XML_daily.asp?date_req=%s", date.Format(dateForm))
 	tr := &http.Transport{
 		MaxIdleConns:       10,
 		IdleConnTimeout:    30 * time.Second,
